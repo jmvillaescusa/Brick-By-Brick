@@ -32,6 +32,7 @@
 		5585345622C2D80600DCF453 /* LetterS.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344722C2D80600DCF453 /* LetterS.png */; };
 		5585345722C2D80600DCF453 /* LetterT.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344822C2D80600DCF453 /* LetterT.png */; };
 		5585345822C2D80600DCF453 /* Base.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344922C2D80600DCF453 /* Base.png */; };
+		5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5585345B22C2E52600DCF453 /* UIButtonViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		5585344722C2D80600DCF453 /* LetterS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LetterS.png; sourceTree = "<group>"; };
 		5585344822C2D80600DCF453 /* LetterT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LetterT.png; sourceTree = "<group>"; };
 		5585344922C2D80600DCF453 /* Base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Base.png; sourceTree = "<group>"; };
+		5585345B22C2E52600DCF453 /* UIButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +138,9 @@
 				5585343822C2D80600DCF453 /* Assets */,
 				5585340422C2D74700DCF453 /* AppDelegate.swift */,
 				5585340622C2D74700DCF453 /* GameScene.sks */,
-				5585340822C2D74700DCF453 /* Actions.sks */,
+				5585345B22C2E52600DCF453 /* UIButtonViewController.swift */,
 				5585340A22C2D74700DCF453 /* GameScene.swift */,
+				5585340822C2D74700DCF453 /* Actions.sks */,
 				5585340C22C2D74700DCF453 /* GameViewController.swift */,
 				5585340E22C2D74700DCF453 /* Main.storyboard */,
 				5585341122C2D74800DCF453 /* Assets.xcassets */,
@@ -351,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */,
 				5585340B22C2D74700DCF453 /* GameScene.swift in Sources */,
 				5585340D22C2D74700DCF453 /* GameViewController.swift in Sources */,
 				5585340522C2D74700DCF453 /* AppDelegate.swift in Sources */,
