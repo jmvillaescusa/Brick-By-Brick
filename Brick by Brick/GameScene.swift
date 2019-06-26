@@ -15,11 +15,12 @@ class GameScene: SKScene {
     private var spinnyNode : SKShapeNode?
     
     var l = L()
-    var j = letterJ()
+    //var j = letterJ()
     var o = O()
+    var z = Z()
     
     var base = Base()
-    
+    var fallingBlock = SKSpriteNode()
     var tetrisBlocks = [SKSpriteNode]()
     
     
@@ -31,12 +32,16 @@ class GameScene: SKScene {
     }
     
     func SpawnBlock(){
-        l.setup()
-        l.zPosition = 1
-        addChild(l)
+        z.setup()
+        z.zPosition = 1
+        addChild(z)
         
         o.setup()
         addChild(o)
+    }
+    
+    func rotateLeft(){
+        fallingBlock.zRotation = 90
     }
     
     override func update(_ currentTime: TimeInterval) {

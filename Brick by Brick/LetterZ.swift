@@ -9,13 +9,13 @@
 import Foundation
 import SpriteKit
 
-class letterJ : SKSpriteNode{
-    var image = SKSpriteNode(imageNamed: "LetterJ")
+class Z : SKSpriteNode{
+    var image = SKSpriteNode(imageNamed: "LetterZ")
     
     func setup(){
         addChild(image)
-        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterJ"), size: image.size)
-        physicsBody.affectedByGravity = true
-        self.physicsBody = physicsBody
+        //let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterJ"), size: image.size)
+        //physicsBody.affectedByGravity = true
+        //self.physicsBody = physicsBody
     }
 }
