@@ -14,38 +14,153 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    var l = L()
-    //var j = letterJ()
-    var o = O()
-    var z = Z()
-    
     var base = Base()
+    
+    
+    //var spawnedBlock: Bool = false
+    
+    let screenSize: CGRect = UIScreen.main.bounds
+    var spawnLocation = CGPoint(x: 0, y: 0)
+    
+    //var lArray = SKSpriteNode[100]()
+    //struct Array <SKSpriteNode>
+    
     var fallingBlock = SKSpriteNode()
     var tetrisBlocks = [SKSpriteNode]()
     
     
     override func didMove(to view: SKView) {
-        SpawnBlock()
         base.setup()
         base.zPosition = 1
         addChild(base)
+        
+        dropBlock()
     }
     
     func SpawnBlock(){
+        spawnLocation = CGPoint(x: screenSize.width * 0.3, y: screenSize.height + 50)
+        var randNum = Int.random(in: 0..<7)
+        if (randNum == 0){
+            letterL()
+        }
+        
+        if (randNum == 1){
+            letterI()
+        }
+        
+        if (randNum == 2){
+            letterJ()
+        }
+        
+        if (randNum == 3){
+            letterO()
+        }
+        
+        if (randNum == 4){
+            letterS()
+        }
+        
+        if (randNum == 5){
+            letterT()
+        }
+        
+        if (randNum == 6){
+            letterZ()
+        }
+        rotateLeft()
+    }
+    
+    func dropBlock(){
+        let SpawnBlock = SKAction.run{
+            self.SpawnBlock()
+        }
+        let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 2)]))
+        
+        run(repeatNewBlock)
+        //        let wait = SKAction.wait(forDuration: duration)
+        //        let run = SKAction.run {
+        //            <#code#>
+        //        }
+    }
+    
+    func letterL(){
+        var l = L()
+        l.setup()
+        l.zPosition = 1
+        l.position = spawnLocation
+        fallingBlock = l
+        
+        addChild(l)
+    }
+    
+    func letterZ(){
+        var z = Z()
         z.setup()
         z.zPosition = 1
-        addChild(z)
+        z.position = spawnLocation
+        fallingBlock = z
         
+        addChild(z)
+    }
+    
+    func letterO(){
+        var o = O()
         o.setup()
+        o.zPosition = 1
+        o.position = spawnLocation
+        fallingBlock = o
+        
         addChild(o)
     }
     
-    func rotateLeft(){
-        fallingBlock.zRotation = 90
+    func letterJ(){
+        var j = J()
+        j.setup()
+        j.zPosition = 1
+        j.position = spawnLocation
+        fallingBlock = j
+        
+        addChild(j)
     }
+    
+    func letterS(){
+        var s = S()
+        s.setup()
+        s.zPosition = 1
+        s.position = spawnLocation
+        fallingBlock = s
+        
+        addChild(s)
+    }
+    
+    func letterT(){
+        var t = T()
+        t.setup()
+        t.zPosition = 1
+        t.position = spawnLocation
+        fallingBlock = t
+        
+        addChild(t)
+    }
+    
+    func letterI(){
+        var i = I()
+        i.setup()
+        i.zPosition = 1
+        i.position = spawnLocation
+        fallingBlock = i
+        
+        addChild(i)
+    }
+    
+    func rotateLeft(){
+        //fallingBlock.zRotation = fallingBlock.zRotation 
+    }
+    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        print(l)
+        //print(l)
+        //SpawnBlock()
     }
 }

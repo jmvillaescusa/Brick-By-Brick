@@ -16,6 +16,7 @@ class Base : SKSpriteNode{
         addChild(image)
         let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Base"), size: image.size)
         physicsBody.affectedByGravity = false
+        physicsBody.isDynamic = false
         self.physicsBody = physicsBody
     }
 }
