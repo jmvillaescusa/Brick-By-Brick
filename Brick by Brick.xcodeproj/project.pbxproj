@@ -41,6 +41,7 @@
 		A8D694F222C2E8E8007F595C /* LetterS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F122C2E8E8007F595C /* LetterS.swift */; };
 		A8D694F422C2E904007F595C /* LetterT.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F322C2E904007F595C /* LetterT.swift */; };
 		A8D694F622C2E924007F595C /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F522C2E924007F595C /* Base.swift */; };
+		A8D694F822C2FE42007F595C /* SKTUtils in Resources */ = {isa = PBXBuildFile; fileRef = A8D694F722C2FE42007F595C /* SKTUtils */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		A8D694F122C2E8E8007F595C /* LetterS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterS.swift; sourceTree = "<group>"; };
 		A8D694F322C2E904007F595C /* LetterT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterT.swift; sourceTree = "<group>"; };
 		A8D694F522C2E924007F595C /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
+		A8D694F722C2FE42007F595C /* SKTUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SKTUtils; path = "Brick by Brick/SKTUtils"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				5585341E22C2D74800DCF453 /* Brick by BrickTests */,
 				5585342922C2D74800DCF453 /* Brick by BrickUITests */,
 				5585340222C2D74700DCF453 /* Products */,
+				A8D694F722C2FE42007F595C /* SKTUtils */,
 			);
 			sourceTree = "<group>";
 		};
@@ -349,6 +352,7 @@
 				5585341222C2D74800DCF453 /* Assets.xcassets in Resources */,
 				5585344D22C2D80600DCF453 /* StickyL.png in Resources */,
 				5585345722C2D80600DCF453 /* LetterT.png in Resources */,
+				A8D694F822C2FE42007F595C /* SKTUtils in Resources */,
 				5585344E22C2D80600DCF453 /* StickyZ.png in Resources */,
 				5585341522C2D74800DCF453 /* LaunchScreen.storyboard in Resources */,
 				5585345322C2D80600DCF453 /* LetterO.png in Resources */,
