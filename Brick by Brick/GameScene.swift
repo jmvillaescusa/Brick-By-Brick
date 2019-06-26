@@ -28,7 +28,9 @@ class GameScene: SKScene {
     var fallingBlock = SKSpriteNode()
     var tetrisBlocks = [SKSpriteNode]()
     
+    //UI Buttons
     let rotateLeft = SKSpriteNode(imageNamed: "LetterO")
+    let rotateRight = SKSpriteNode(imageNamed: "LetterO")
     
     override func didMove(to view: SKView) {
         setupButton()
@@ -69,7 +71,7 @@ class GameScene: SKScene {
         if (randNum == 6){
             letterZ()
         }
-        rotateLeft()
+        //rotateLeft()
     }
     
     func dropBlock(){
@@ -151,8 +153,11 @@ class GameScene: SKScene {
         addChild(i)
     }
     
-    func rotateLeft(){
-        //fallingBlock.zRotation = fallingBlock.zRotation 
+    func turnLeft() {
+        fallingBlock.zRotation = fallingBlock.zRotation + 180
+    }
+    func turnRight() {
+        fallingBlock.zRotation = fallingBlock.zRotation - 180
     }
     
     
@@ -161,17 +166,24 @@ class GameScene: SKScene {
     }
     
     func setupButton() {
-        rotateLeft.position = CGPoint(x: 100, y: 100)
-        rotateLeft.size = CGSize(width: 50, height: 50)
+        rotateLeft.position = CGPoint(x: -250, y: -800)
         rotateLeft.zPosition = 100
-        rotateLeft.name = "left"
         addChild(rotateLeft)
+        
+        rotateRight.position = CGPoint(x: 250, y: -800)
+        rotateRight.zPosition = 100
+        addChild(rotateRight)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //let touch = touches.first!
-        //if rotateLeft.containsPoint(touch.locationInNode(self)) {
-           // print("touched")
-        //}
+        for touch in touches {
+            let location = touch.location(in: self)
+            
+            if (rotateLeft.frame.contains(location)){
+                turnLeft()
+            } else if (rotateRight.frame.contains(location)) {
+                turnRight()
+            }
+        }
     }
 }
