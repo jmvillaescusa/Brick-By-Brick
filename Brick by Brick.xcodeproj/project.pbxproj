@@ -32,9 +32,7 @@
 		5585345622C2D80600DCF453 /* LetterS.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344722C2D80600DCF453 /* LetterS.png */; };
 		5585345722C2D80600DCF453 /* LetterT.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344822C2D80600DCF453 /* LetterT.png */; };
 		5585345822C2D80600DCF453 /* Base.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344922C2D80600DCF453 /* Base.png */; };
-
 		5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5585345B22C2E52600DCF453 /* UIButtonViewController.swift */; };
-
 		A8D694E822C2DA15007F595C /* LetterL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E722C2DA15007F595C /* LetterL.swift */; };
 		A8D694EA22C2E7FA007F595C /* LetterZ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E922C2E7FA007F595C /* LetterZ.swift */; };
 		A8D694EC22C2E83A007F595C /* LetterO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694EB22C2E83A007F595C /* LetterO.swift */; };
@@ -43,7 +41,6 @@
 		A8D694F222C2E8E8007F595C /* LetterS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F122C2E8E8007F595C /* LetterS.swift */; };
 		A8D694F422C2E904007F595C /* LetterT.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F322C2E904007F595C /* LetterT.swift */; };
 		A8D694F622C2E924007F595C /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694F522C2E924007F595C /* Base.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,9 +92,7 @@
 		5585344722C2D80600DCF453 /* LetterS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LetterS.png; sourceTree = "<group>"; };
 		5585344822C2D80600DCF453 /* LetterT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LetterT.png; sourceTree = "<group>"; };
 		5585344922C2D80600DCF453 /* Base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Base.png; sourceTree = "<group>"; };
-
 		5585345B22C2E52600DCF453 /* UIButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonViewController.swift; sourceTree = "<group>"; };
-
 		A8D694E722C2DA15007F595C /* LetterL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LetterL.swift; path = LetterObj/LetterL.swift; sourceTree = "<group>"; };
 		A8D694E922C2E7FA007F595C /* LetterZ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterZ.swift; sourceTree = "<group>"; };
 		A8D694EB22C2E83A007F595C /* LetterO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterO.swift; sourceTree = "<group>"; };
@@ -106,7 +101,6 @@
 		A8D694F122C2E8E8007F595C /* LetterS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterS.swift; sourceTree = "<group>"; };
 		A8D694F322C2E904007F595C /* LetterT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterT.swift; sourceTree = "<group>"; };
 		A8D694F522C2E924007F595C /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,21 +153,18 @@
 			children = (
 				5585343822C2D80600DCF453 /* Assets */,
 				5585340422C2D74700DCF453 /* AppDelegate.swift */,
-				5585340622C2D74700DCF453 /* GameScene.sks */,
 				5585345B22C2E52600DCF453 /* UIButtonViewController.swift */,
-				5585340A22C2D74700DCF453 /* GameScene.swift */,
-
 				5585340822C2D74700DCF453 /* Actions.sks */,
-
+				5585340622C2D74700DCF453 /* GameScene.sks */,
+				5585340A22C2D74700DCF453 /* GameScene.swift */,
 				A8D694E922C2E7FA007F595C /* LetterZ.swift */,
 				A8D694EF22C2E8C3007F595C /* LetterI.swift */,
 				A8D694F122C2E8E8007F595C /* LetterS.swift */,
 				A8D694F322C2E904007F595C /* LetterT.swift */,
-				A8D694F522C2E924007F595C /* Base.swift */,
 				A8D694EB22C2E83A007F595C /* LetterO.swift */,
 				A8D694ED22C2E862007F595C /* LetterJ.swift */,
 				A8D694E722C2DA15007F595C /* LetterL.swift */,
-
+				A8D694F522C2E924007F595C /* Base.swift */,
 				5585340C22C2D74700DCF453 /* GameViewController.swift */,
 				5585340E22C2D74700DCF453 /* Main.storyboard */,
 				5585341122C2D74800DCF453 /* Assets.xcassets */,
@@ -387,15 +378,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */,
-
 				A8D694F222C2E8E8007F595C /* LetterS.swift in Sources */,
 				A8D694E822C2DA15007F595C /* LetterL.swift in Sources */,
 				A8D694F022C2E8C3007F595C /* LetterI.swift in Sources */,
 				A8D694EA22C2E7FA007F595C /* LetterZ.swift in Sources */,
 				A8D694EE22C2E862007F595C /* LetterJ.swift in Sources */,
-
 				5585340B22C2D74700DCF453 /* GameScene.swift in Sources */,
 				A8D694F422C2E904007F595C /* LetterT.swift in Sources */,
 				A8D694EC22C2E83A007F595C /* LetterO.swift in Sources */,
