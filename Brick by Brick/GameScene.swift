@@ -44,27 +44,11 @@ class GameScene: SKScene {
         base.setup()
         base.zPosition = 1
         addChild(base)
-        
-        dropBlock()
-    }
     
-    func SpawnBlock(){
-        spawnLocation = CGPoint(x: screenSize.width * 0.3, y: screenSize.height + 50)
-        
-        let randNum = Int.random(in: 0..<7)
-        if (randNum == 0){ letterL() }        
-        if (randNum == 1){ letterI() }
-        if (randNum == 2){ letterJ() }
-        if (randNum == 3){ letterO() }
-        if (randNum == 4){ letterS() }
-        if (randNum == 5){ letterT() }
-        if (randNum == 6){ letterZ() }
         showingNext = childNode(withName: "NextBlockShowing") as! SKSpriteNode
-        
-        
         fillBlockArray()
         if (droppableBlocks.count > 2){
-                dropBlock()
+            dropBlock()
         }
     }
     
