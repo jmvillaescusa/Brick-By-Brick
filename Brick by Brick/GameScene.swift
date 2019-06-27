@@ -45,7 +45,7 @@ class GameScene: SKScene {
         base.zPosition = 1
         addChild(base)
     
-        showingNext = childNode(withName: "NextBlockShowing") as! SKSpriteNode
+        showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
         fillBlockArray()
         if (droppableBlocks.count > 2){
             dropBlock()
