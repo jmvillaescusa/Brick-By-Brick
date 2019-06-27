@@ -14,8 +14,12 @@ class Z : SKSpriteNode{
     
     func setup(){
         addChild(image)
-        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterJ"), size: image.size)
+        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterZ"), size: image.size)
         physicsBody.affectedByGravity = true
         self.physicsBody = physicsBody
+    }
+    
+    func getImage() -> SKSpriteNode {
+        return image
     }
 }

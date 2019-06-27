@@ -18,4 +18,8 @@ class J : SKSpriteNode{
         physicsBody.affectedByGravity = true
         self.physicsBody = physicsBody
     }
+    
+    func getImage() -> SKSpriteNode {
+        return image
+    }
 }
