@@ -36,6 +36,13 @@
 		5585345722C2D80600DCF453 /* LetterT.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344822C2D80600DCF453 /* LetterT.png */; };
 		5585345822C2D80600DCF453 /* Base.png in Resources */ = {isa = PBXBuildFile; fileRef = 5585344922C2D80600DCF453 /* Base.png */; };
 		5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5585345B22C2E52600DCF453 /* UIButtonViewController.swift */; };
+		A822782F22C5829F0033E6BC /* StickyL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822782E22C5829F0033E6BC /* StickyL.swift */; };
+		A822783122C582C00033E6BC /* StickyS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783022C582C00033E6BC /* StickyS.swift */; };
+		A822783322C582F90033E6BC /* StickyT.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783222C582F90033E6BC /* StickyT.swift */; };
+		A822783522C583090033E6BC /* StickyO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783422C583090033E6BC /* StickyO.swift */; };
+		A822783722C583190033E6BC /* StickyZ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783622C583190033E6BC /* StickyZ.swift */; };
+		A822783922C5832F0033E6BC /* StickyI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783822C5832F0033E6BC /* StickyI.swift */; };
+		A822783B22C5833C0033E6BC /* StickyJ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783A22C5833C0033E6BC /* StickyJ.swift */; };
 		A8D694E822C2DA15007F595C /* LetterL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E722C2DA15007F595C /* LetterL.swift */; };
 		A8D694EA22C2E7FA007F595C /* LetterZ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E922C2E7FA007F595C /* LetterZ.swift */; };
 		A8D694EC22C2E83A007F595C /* LetterO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694EB22C2E83A007F595C /* LetterO.swift */; };
@@ -100,7 +107,14 @@
 		5585344822C2D80600DCF453 /* LetterT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LetterT.png; sourceTree = "<group>"; };
 		5585344922C2D80600DCF453 /* Base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Base.png; sourceTree = "<group>"; };
 		5585345B22C2E52600DCF453 /* UIButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonViewController.swift; sourceTree = "<group>"; };
-		A8D694E722C2DA15007F595C /* LetterL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LetterL.swift; path = LetterObj/LetterL.swift; sourceTree = "<group>"; };
+		A822782E22C5829F0033E6BC /* StickyL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyL.swift; sourceTree = "<group>"; };
+		A822783022C582C00033E6BC /* StickyS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyS.swift; sourceTree = "<group>"; };
+		A822783222C582F90033E6BC /* StickyT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyT.swift; sourceTree = "<group>"; };
+		A822783422C583090033E6BC /* StickyO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyO.swift; sourceTree = "<group>"; };
+		A822783622C583190033E6BC /* StickyZ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyZ.swift; sourceTree = "<group>"; };
+		A822783822C5832F0033E6BC /* StickyI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyI.swift; sourceTree = "<group>"; };
+		A822783A22C5833C0033E6BC /* StickyJ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyJ.swift; sourceTree = "<group>"; };
+		A8D694E722C2DA15007F595C /* LetterL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterL.swift; sourceTree = "<group>"; };
 		A8D694E922C2E7FA007F595C /* LetterZ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterZ.swift; sourceTree = "<group>"; };
 		A8D694EB22C2E83A007F595C /* LetterO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterO.swift; sourceTree = "<group>"; };
 		A8D694ED22C2E862007F595C /* LetterJ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterJ.swift; sourceTree = "<group>"; };
@@ -176,13 +190,6 @@
 				5585340822C2D74700DCF453 /* Actions.sks */,
 				5585340622C2D74700DCF453 /* GameScene.sks */,
 				5585340A22C2D74700DCF453 /* GameScene.swift */,
-				A8D694E922C2E7FA007F595C /* LetterZ.swift */,
-				A8D694EF22C2E8C3007F595C /* LetterI.swift */,
-				A8D694F122C2E8E8007F595C /* LetterS.swift */,
-				A8D694F322C2E904007F595C /* LetterT.swift */,
-				A8D694EB22C2E83A007F595C /* LetterO.swift */,
-				A8D694ED22C2E862007F595C /* LetterJ.swift */,
-				A8D694E722C2DA15007F595C /* LetterL.swift */,
 				A8D694F522C2E924007F595C /* Base.swift */,
 				5585340C22C2D74700DCF453 /* GameViewController.swift */,
 				5585340E22C2D74700DCF453 /* Main.storyboard */,
@@ -225,6 +232,8 @@
 		5585343922C2D80600DCF453 /* Sticky */ = {
 			isa = PBXGroup;
 			children = (
+				A822782E22C5829F0033E6BC /* StickyL.swift */,
+				A822783022C582C00033E6BC /* StickyS.swift */,
 				5585343A22C2D80600DCF453 /* StickyS.png */,
 				5585343B22C2D80600DCF453 /* StickyT.png */,
 				5585343C22C2D80600DCF453 /* StickyO.png */,
@@ -232,6 +241,11 @@
 				5585343E22C2D80600DCF453 /* StickyZ.png */,
 				5585343F22C2D80600DCF453 /* StickyI.png */,
 				5585344022C2D80600DCF453 /* StickyJ.png */,
+				A822783222C582F90033E6BC /* StickyT.swift */,
+				A822783422C583090033E6BC /* StickyO.swift */,
+				A822783622C583190033E6BC /* StickyZ.swift */,
+				A822783822C5832F0033E6BC /* StickyI.swift */,
+				A822783A22C5833C0033E6BC /* StickyJ.swift */,
 			);
 			path = Sticky;
 			sourceTree = "<group>";
@@ -239,6 +253,13 @@
 		5585344122C2D80600DCF453 /* Letter */ = {
 			isa = PBXGroup;
 			children = (
+				A8D694E922C2E7FA007F595C /* LetterZ.swift */,
+				A8D694EF22C2E8C3007F595C /* LetterI.swift */,
+				A8D694F122C2E8E8007F595C /* LetterS.swift */,
+				A8D694F322C2E904007F595C /* LetterT.swift */,
+				A8D694EB22C2E83A007F595C /* LetterO.swift */,
+				A8D694ED22C2E862007F595C /* LetterJ.swift */,
+				A8D694E722C2DA15007F595C /* LetterL.swift */,
 				5585344222C2D80600DCF453 /* LetterL.png */,
 				5585344322C2D80600DCF453 /* LetterZ.png */,
 				5585344422C2D80600DCF453 /* LetterO.png */,
@@ -404,15 +425,22 @@
 			files = (
 				5585345C22C2E52600DCF453 /* UIButtonViewController.swift in Sources */,
 				A8D694F222C2E8E8007F595C /* LetterS.swift in Sources */,
+				A822783122C582C00033E6BC /* StickyS.swift in Sources */,
 				A8D694E822C2DA15007F595C /* LetterL.swift in Sources */,
 				A8D694F022C2E8C3007F595C /* LetterI.swift in Sources */,
+				A822782F22C5829F0033E6BC /* StickyL.swift in Sources */,
+				A822783922C5832F0033E6BC /* StickyI.swift in Sources */,
 				A8D694EA22C2E7FA007F595C /* LetterZ.swift in Sources */,
 				A8D694EE22C2E862007F595C /* LetterJ.swift in Sources */,
 				5585340B22C2D74700DCF453 /* GameScene.swift in Sources */,
+				A822783322C582F90033E6BC /* StickyT.swift in Sources */,
+				A822783722C583190033E6BC /* StickyZ.swift in Sources */,
 				A8D694F422C2E904007F595C /* LetterT.swift in Sources */,
 				A8D694EC22C2E83A007F595C /* LetterO.swift in Sources */,
 				5585340D22C2D74700DCF453 /* GameViewController.swift in Sources */,
 				5585340522C2D74700DCF453 /* AppDelegate.swift in Sources */,
+				A822783B22C5833C0033E6BC /* StickyJ.swift in Sources */,
+				A822783522C583090033E6BC /* StickyO.swift in Sources */,
 				A8D694F622C2E924007F595C /* Base.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

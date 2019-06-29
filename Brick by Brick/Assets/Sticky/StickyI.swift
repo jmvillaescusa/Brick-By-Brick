@@ -1,21 +1,22 @@
 //
-//  LetterI.swift
+//  StickyI.swift
 //  Brick by Brick
 //
-//  Created by Rick Berenguer on 2019-06-25.
+//  Created by Rick Berenguer on 2019-06-27.
 //  Copyright © 2019 Jaimeson Mario Villaescusa. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class I : SKSpriteNode{
-    var image = SKSpriteNode(imageNamed: "LetterI")
+class stickyI : SKSpriteNode {
+    var image = SKSpriteNode(imageNamed: "StickyI")
     
     func setup(){
         addChild(image)
-        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: image.size)
+        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "StickyI"), size: image.size)
         physicsBody.affectedByGravity = true
+        physicsBody.restitution = 0
         self.physicsBody = physicsBody
     }
     

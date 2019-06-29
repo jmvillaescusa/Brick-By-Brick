@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -26,7 +26,19 @@ class GameScene: SKScene {
     var nextBlock = SKSpriteNode()
     var showingNext = SKSpriteNode()
     
+    var lives = 5
+    
     var droppableBlocks = [SKSpriteNode]()
+    
+    var killBox1 = SKSpriteNode()
+    var killBox2 = SKSpriteNode()
+    
+    enum CategoryMask: UInt32 {
+        case blocks = 0b01 // 1
+        case killbox = 0b10 // 2
+        case base = 0b11 // 3
+        case sticky = 0b100 // 4
+    }
     
     
     //UI Buttons
@@ -43,40 +55,105 @@ class GameScene: SKScene {
         setupButton()
         base.setup()
         base.zPosition = 1
+        base.physicsBody?.categoryBitMask = CategoryMask.base.rawValue
+        base.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        base.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         addChild(base)
+        
+        physicsWorld.contactDelegate = self
+        
+        killBox1 = childNode(withName: "killbox1") as! SKSpriteNode
+        killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
+
+        setupKillboxes()
     
         showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
-        fillBlockArray()
-        if (droppableBlocks.count > 2){
+        if (droppableBlocks.count < 2){
+            fillBlockArray()
+        }
+        
+        if (droppableBlocks.count >= 1){
             dropBlock()
         }
+        
+        view.showsPhysics = true
     }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        var collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        contact.bodyA.angularVelocity = 0
+        contact.bodyB.angularVelocity = 0
+        
+        // collision for blocks hitting kill box
+        if (collision == CategoryMask.blocks.rawValue | CategoryMask.killbox.rawValue){
+            if (contact.bodyA.categoryBitMask == CategoryMask.killbox.rawValue){
+                contact.bodyB.node?.removeFromParent()
+                lives = lives - 1
+                print("delete A")
+            }
+        }
+        // collision for sticky block hitting blocks
+        else if (collision == CategoryMask.sticky.rawValue | CategoryMask.blocks.rawValue){
+            if (contact.bodyA.categoryBitMask == CategoryMask.sticky.rawValue){
+                // create a fixed joint between bodyA and bodyB
+                var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
+                
+                scene?.physicsWorld.add(collisionBox)
+            }
+            else if (contact.bodyB.categoryBitMask == CategoryMask.sticky.rawValue){
+                var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
+                
+                scene?.physicsWorld.add(collisionBox)
+            }
+        }
+        // collision for sticky block hitting sticky block
+        else if (collision == CategoryMask.sticky.rawValue | CategoryMask.sticky.rawValue){
+            var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
+            
+            scene?.physicsWorld.add(collisionBox)
+            print("hitting sticky with sticky")
+        }
+        else {
+    }
+}
+    
     
     // This creates a block for the array to spawn
     func createBlock(){
-            spawnLocation = CGPoint(x: screenSize.width * 0.3, y: screenSize.height + 50)
-            var randNum = Int.random(in: 0..<7)
-            if (randNum == 0){
-                letterL()
-            }
-            if (randNum == 1){
-                letterI()
-            }
-            if (randNum == 2){
-                letterJ()
-            }
-            if (randNum == 3){
-                letterO()
-            }
-            if (randNum == 4){
-                letterS()
-            }
-            if (randNum == 5){
-                letterT()
-            }
-            if (randNum == 6){
-                letterZ()
-            }
+        spawnLocation = CGPoint(x: screenSize.width * 0.3, y: screenSize.height + 50)
+        var randNum = Int.random(in: 0..<99)
+        
+        if (randNum > 0 && randNum <= 9){
+            letterL()
+        }
+        if (randNum >= 10 && randNum <= 19){
+            letterI()
+        }
+        if (randNum >= 20 && randNum <= 29){
+            letterJ()
+        }
+        if (randNum >= 30 && randNum <= 39){
+            letterO()
+        }
+        if (randNum >= 40 && randNum <= 49){
+            letterS()
+        }
+        if (randNum >= 50 && randNum <= 59){
+            letterT()
+        }
+        if (randNum >= 60 && randNum <= 69){
+            letterZ()
+        }
+        if (randNum >= 70 && randNum <= 79){
+            StickyL()
+        }
+        if (randNum >= 80 && randNum <= 89){
+            StickyI()
+        }
+        if (randNum >= 90 && randNum <= 99){
+            StickyO()
+        }
     }
     
     func updateNextBlock(){
@@ -90,15 +167,12 @@ class GameScene: SKScene {
         updateNextBlock()
         droppableBlocks[0].position = spawnLocation
         addChild(droppableBlocks[0])
+        print(droppableBlocks[0].physicsBody?.categoryBitMask)
         droppableBlocks.remove(at: 0)
     }
     
     // this is a endless loop that spawns the blocks
     func dropBlock(){
-        let CreateBlock = SKAction.run{
-            self.createBlock()
-        }
-        
         let SpawnBlock = SKAction.run{
             self.SpawnBlock()
         }
@@ -116,6 +190,8 @@ class GameScene: SKScene {
         }
     }
     
+    ////////////////////////// Start of setup Letters //////////////////////////////////
+    
     //creation of letter L
     func letterL(){
         var l = L()
@@ -123,6 +199,9 @@ class GameScene: SKScene {
         l.zPosition = 1
         l.name = "L"
         l.texture = l.getImage().texture
+        l.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        l.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        l.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(l)
     }
     
@@ -132,6 +211,9 @@ class GameScene: SKScene {
         z.setup()
         z.zPosition = 1
         z.texture = z.getImage().texture
+        z.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        z.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        z.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(z)
     }
     
@@ -141,6 +223,9 @@ class GameScene: SKScene {
         o.setup()
         o.zPosition = 1
         o.texture = o.getImage().texture
+        o.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        o.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        o.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(o)
     }
     
@@ -150,6 +235,9 @@ class GameScene: SKScene {
         j.setup()
         j.zPosition = 1
         j.texture = j.getImage().texture
+        j.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        j.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        j.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(j)
     }
     
@@ -159,6 +247,9 @@ class GameScene: SKScene {
         s.setup()
         s.zPosition = 1
         s.texture = s.getImage().texture
+        s.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        s.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        s.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(s)
     }
     
@@ -168,6 +259,9 @@ class GameScene: SKScene {
         t.setup()
         t.zPosition = 1
         t.texture = t.getImage().texture
+        t.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        t.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        t.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(t)
     }
     
@@ -177,7 +271,111 @@ class GameScene: SKScene {
         i.setup()
         i.zPosition = 1
         i.texture = i.getImage().texture
+        i.physicsBody?.categoryBitMask = CategoryMask.blocks.rawValue
+        i.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
+        i.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(i)
+    }
+    
+    func StickyL(){
+        var sticky_l = stickyL()
+        sticky_l.setup()
+        sticky_l.zPosition = 1
+        sticky_l.texture = sticky_l.getImage().texture
+        sticky_l.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_l.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_l.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_l)
+    }
+    
+    func StickyS(){
+        var sticky_s = stickyS()
+        sticky_s.setup()
+        sticky_s.zPosition = 1
+        sticky_s.texture = sticky_s.getImage().texture
+        sticky_s.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_s.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_s.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_s)
+
+    }
+    
+    func StickyT(){
+        var sticky_t = stickyT()
+        sticky_t.setup()
+        sticky_t.zPosition = 1
+        sticky_t.texture = sticky_t.getImage().texture
+        sticky_t.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_t.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_t.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_t)
+
+    }
+    
+    func StickyO(){
+        var sticky_o = stickyO()
+        sticky_o.setup()
+        sticky_o.zPosition = 1
+        sticky_o.texture = sticky_o.getImage().texture
+        sticky_o.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_o.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_o.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_o)
+
+    }
+    
+    func StickyZ(){
+        var sticky_z = stickyZ()
+        sticky_z.setup()
+        sticky_z.zPosition = 1
+        sticky_z.texture = sticky_z.getImage().texture
+        sticky_z.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_z.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_z.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_z)
+
+    }
+    
+    func StickyI(){
+        var sticky_i = stickyI()
+        sticky_i.setup()
+        sticky_i.zPosition = 1
+        sticky_i.texture = sticky_i.getImage().texture
+        sticky_i.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_i.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_i.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_i)
+
+    }
+    
+    func StickyJ(){
+        var sticky_j = stickyJ()
+        sticky_j.setup()
+        sticky_j.zPosition = 1
+        sticky_j.texture = sticky_j.getImage().texture
+        sticky_j.physicsBody?.categoryBitMask = CategoryMask.sticky.rawValue
+        sticky_j.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        sticky_j.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
+        droppableBlocks.append(sticky_j)
+
+    }
+    
+    ///////////////////////////////////End of Setups Letters//////////////////////
+    
+    func setupKillboxes(){
+        killBox1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox1.size)
+        killBox1.zPosition = 1
+        killBox1.physicsBody?.isDynamic = false
+        killBox1.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
+        killBox1.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
+        killBox1.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
+        
+        killBox2.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox2.size)
+        killBox2.zPosition = 1
+        killBox2.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
+        killBox2.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
+        killBox2.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
+        killBox2.physicsBody?.isDynamic = false
     }
     
     func turnLeft() {
@@ -262,3 +460,4 @@ class GameScene: SKScene {
 extension CGFloat {
     var degreesToRadians: CGFloat { return CGFloat(self) * .pi / 180 }
 }
+

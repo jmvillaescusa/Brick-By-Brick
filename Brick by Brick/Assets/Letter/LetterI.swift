@@ -1,5 +1,5 @@
 //
-//  Base.swift
+//  LetterI.swift
 //  Brick by Brick
 //
 //  Created by Rick Berenguer on 2019-06-25.
@@ -9,15 +9,18 @@
 import Foundation
 import SpriteKit
 
-class Base : SKSpriteNode{
-    var image = SKSpriteNode(imageNamed: "Base")
+class I : SKSpriteNode{
+    var image = SKSpriteNode(imageNamed: "LetterI")
     
     func setup(){
         addChild(image)
-        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Base"), size: image.size)
-        physicsBody.affectedByGravity = false
+        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: image.size)
+        physicsBody.affectedByGravity = true
         physicsBody.restitution = 0
-        physicsBody.isDynamic = false
         self.physicsBody = physicsBody
+    }
+    
+    func getImage() -> SKSpriteNode {
+        return image
     }
 }

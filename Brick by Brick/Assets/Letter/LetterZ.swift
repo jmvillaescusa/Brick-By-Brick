@@ -1,5 +1,5 @@
 //
-//  LetterO.swift
+//  LetterZ.swift
 //  Brick by Brick
 //
 //  Created by Rick Berenguer on 2019-06-25.
@@ -9,13 +9,14 @@
 import Foundation
 import SpriteKit
 
-class O : SKSpriteNode{
-    var image = SKSpriteNode(imageNamed: "LetterO")
+class Z : SKSpriteNode{
+    var image = SKSpriteNode(imageNamed: "LetterZ")
     
     func setup(){
         addChild(image)
-        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterO"), size: image.size)
+        let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterZ"), size: image.size)
         physicsBody.affectedByGravity = true
+        physicsBody.restitution = 0
         self.physicsBody = physicsBody
     }
     
