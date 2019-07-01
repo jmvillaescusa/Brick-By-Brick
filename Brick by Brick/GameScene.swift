@@ -15,9 +15,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var spinnyNode : SKShapeNode?
     
     var base = Base()
+    let cameraNode = SKCameraNode()
     
     let screenSize: CGRect = UIScreen.main.bounds
-    var spawnLocation = CGPoint(x: 0, y: -10)
+    var spawnLocation = CGPoint(x: 0, y: 0)
     
     var fallingBlock = SKSpriteNode()
     var fallingSpeed: CGFloat = 5
@@ -51,21 +52,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var movingLeft: Bool = false
     var movingRight: Bool = false
     
-    override func didMove(to view: SKView) {
-        setupButton()
+    //Setup
+    func setupCamera() {
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: 0, y: 0)
+    }
+    func setupBase() {
         base.setup()
         base.zPosition = 1
         base.physicsBody?.categoryBitMask = CategoryMask.base.rawValue
         base.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         base.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         addChild(base)
+    }
+    func setupKillboxes(){
+        killBox1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox1.size)
+        killBox1.zPosition = 1
+        killBox1.physicsBody?.isDynamic = false
+        killBox1.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
+        killBox1.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
+        killBox1.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
+        
+        killBox2.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox2.size)
+        killBox2.zPosition = 1
+        killBox2.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
+        killBox2.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
+        killBox2.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
+        killBox2.physicsBody?.isDynamic = false
+    }
+    func setupButton() {
+        rotateLeft.position = CGPoint(x: -400, y: -1100)
+        rotateLeft.setScale(2)
+        rotateLeft.zPosition = 100
+        addChild(rotateLeft)
+        
+        rotateRight.position = CGPoint(x: 400, y: -1100)
+        rotateRight.setScale(2)
+        rotateRight.zPosition = 100
+        addChild(rotateRight)
+        
+        holdPiece.position = CGPoint(x: 0, y: -1100)
+        holdPiece.setScale(2)
+        holdPiece.zPosition = 100
+        addChild(holdPiece)
+    }
+    
+    override func didMove(to view: SKView) {
+        setupCamera()
+        setupButton()
         
         physicsWorld.contactDelegate = self
         
         killBox1 = childNode(withName: "killbox1") as! SKSpriteNode
         killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
-
+        
         setupKillboxes()
+        setupBase()
     
         showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
         if (droppableBlocks.count < 2){
@@ -115,13 +158,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("hitting sticky with sticky")
         }
         else {
+        }
     }
-}
     
     
     // This creates a block for the array to spawn
     func createBlock(){
-        spawnLocation = CGPoint(x: screenSize.width * 0.3, y: screenSize.height + 50)
+        spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
         var randNum = Int.random(in: 0..<99)
         
         if (randNum > 0 && randNum <= 9){
@@ -160,8 +203,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         showingNext.texture = droppableBlocks[1].texture
     }
     
-    // this spawns a block from the first element of the array
-    //also, sets falling block to the dropped block, the next block to next block
+    //This spawns a block from the first element of the array
+    //Also, sets falling block to the dropped block, the next block to next block
     func SpawnBlock(){
         fallingBlock = droppableBlocks[0]
         updateNextBlock()
@@ -171,17 +214,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         droppableBlocks.remove(at: 0)
     }
     
-    // this is a endless loop that spawns the blocks
+    //This is a endless loop that spawns the blocks
     func dropBlock(){
         let SpawnBlock = SKAction.run{
             self.SpawnBlock()
         }
-        let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 3)]))
+        let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 4)]))
         
         run(repeatNewBlock)
     }
  
-    //this fills the block array to 50 blocks
+    //This fills the block array to 50 blocks
     func fillBlockArray(){
         if (droppableBlocks.count == 0){
             for n in 0...50{
@@ -362,47 +405,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     ///////////////////////////////////End of Setups Letters//////////////////////
     
-    func setupKillboxes(){
-        killBox1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox1.size)
-        killBox1.zPosition = 1
-        killBox1.physicsBody?.isDynamic = false
-        killBox1.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
-        killBox1.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
-        killBox1.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
-        
-        killBox2.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox2.size)
-        killBox2.zPosition = 1
-        killBox2.physicsBody?.categoryBitMask = CategoryMask.killbox.rawValue
-        killBox2.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue
-        killBox2.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
-        killBox2.physicsBody?.isDynamic = false
-    }
-    
+    // Movement of Falling Block
     func turnLeft() {
         fallingBlock.zRotation = fallingBlock.zRotation + CGFloat(90).degreesToRadians
     }
     func turnRight() {
         fallingBlock.zRotation = fallingBlock.zRotation - CGFloat(90).degreesToRadians
     }
+    func pieceMovement() {
+        if (movingDown && !movingRight && !movingLeft) {
+            fallingBlock.position.y -= 40
+        }
+        if (movingRight && !movingDown) {
+            fallingBlock.position.x += 25
+        }
+        if (movingLeft && !movingDown) {
+            fallingBlock.position.x -= 25
+        }
+    }
     
+    func updateUI() {
+        //UI Buttons
+        rotateLeft.position.y = cameraNode.position.y - 1100
+        rotateRight.position.y = cameraNode.position.y - 1100
+        holdPiece.position.y = cameraNode.position.y - 1100
+        
+        //Spawn Location
+        spawnLocation.y = cameraNode.position.y + 1700
+        
+        //Next Piece
+        showingNext.position.y = cameraNode.position.y + 1145
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        //fallingBlock.position.y -= fallingSpeed
-    }
-    
-    func setupButton() {
-        rotateLeft.position = CGPoint(x: -250, y: -775)
-        rotateLeft.zPosition = 100
-        addChild(rotateLeft)
-        
-        rotateRight.position = CGPoint(x: 250, y: -775)
-        rotateRight.zPosition = 100
-        addChild(rotateRight)
-        
-        holdPiece.position = CGPoint(x: 0, y: -775)
-        holdPiece.zPosition = 100
-        addChild(holdPiece)
+        updateUI()
+        cameraNode.position.y += 0.5
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -429,22 +467,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (!rotateLeft.frame.contains(newlocation) && !rotateRight.frame.contains(newlocation) && !holdPiece.frame.contains(newlocation)) {
                 if (newlocation.y < previousLocation.y - 20) {
                     movingDown = true
+                    movingLeft = false
+                    movingRight = false
                 }
                 else if (newlocation.x > previousLocation.x) {
                     movingRight = true
+                    movingDown = false
                 } else if (newlocation.x < previousLocation.x) {
                     movingLeft = true
+                    movingDown = false
                 }
-                
-                if (movingDown && !movingRight && !movingLeft) {
-                    //fallingBlock.position.y -= 40
-                }
-                if (movingRight && !movingLeft && !movingDown) {
-                    fallingBlock.position.x += 25
-                }
-                if (movingLeft && !movingRight && !movingDown) {
-                    fallingBlock.position.x -= 25
-                }
+                pieceMovement()
             }
         }
     }
