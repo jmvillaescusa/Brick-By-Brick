@@ -190,7 +190,6 @@
 				5585340822C2D74700DCF453 /* Actions.sks */,
 				5585340622C2D74700DCF453 /* GameScene.sks */,
 				5585340A22C2D74700DCF453 /* GameScene.swift */,
-				A8D694F522C2E924007F595C /* Base.swift */,
 				5585340C22C2D74700DCF453 /* GameViewController.swift */,
 				5585340E22C2D74700DCF453 /* Main.storyboard */,
 				5585341122C2D74800DCF453 /* Assets.xcassets */,
@@ -225,6 +224,7 @@
 				5585343922C2D80600DCF453 /* Sticky */,
 				5585344122C2D80600DCF453 /* Letter */,
 				5585344922C2D80600DCF453 /* Base.png */,
+				A8D694F522C2E924007F595C /* Base.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
