@@ -12,6 +12,8 @@ import SpriteKit
 class stickyL : SKSpriteNode{
     var image = SKSpriteNode(imageNamed: "StickyL")
     
+    var rotatable = true
+    
     func setup(){
         addChild(image)
         let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "StickyL"), size: image.size)

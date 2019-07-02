@@ -33,6 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var killBox1 = SKSpriteNode()
     var killBox2 = SKSpriteNode()
     
+    var rotatable = true
+    
     enum CategoryMask: UInt32 {
         case blocks = 0b01 // 1
         case killbox = 0b10 // 2
@@ -90,7 +92,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (contact.bodyA.categoryBitMask == CategoryMask.killbox.rawValue){
                 contact.bodyB.node?.removeFromParent()
                 lives = lives - 1
-                print("delete A")
             }
         }
         // collision for sticky block hitting blocks
@@ -98,19 +99,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (contact.bodyA.categoryBitMask == CategoryMask.sticky.rawValue){
                 // create a fixed joint between bodyA and bodyB
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
-                
+                rotatable = false
+                //contact.bodyA.allowsRotation = false
+                //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
             }
             else if (contact.bodyB.categoryBitMask == CategoryMask.sticky.rawValue){
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
-                
+                rotatable = false
+                //contact.bodyA.allowsRotation = false
+                //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
             }
         }
         // collision for sticky block hitting sticky block
         else if (collision == CategoryMask.sticky.rawValue | CategoryMask.sticky.rawValue){
             var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
-            
+            rotatable = false
+            //contact.bodyA.allowsRotation = false
+            //contact.bodyB.allowsRotation = false
             scene?.physicsWorld.add(collisionBox)
             print("hitting sticky with sticky")
         }
@@ -169,6 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(droppableBlocks[0])
         print(droppableBlocks[0].physicsBody?.categoryBitMask)
         droppableBlocks.remove(at: 0)
+        rotatable = true
     }
     
     // this is a endless loop that spawns the blocks
@@ -409,9 +417,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let location = touch.location(in: self)
             
-            if (rotateLeft.frame.contains(location)){
+            if (rotateLeft.frame.contains(location) && rotatable){
                 turnLeft()
-            } else if (rotateRight.frame.contains(location)) {
+            } else if (rotateRight.frame.contains(location) && rotatable) {
                 turnRight()
             } else if (holdPiece.frame.contains(location)) {
                 print("piece held")

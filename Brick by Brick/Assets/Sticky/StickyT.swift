@@ -11,6 +11,7 @@ import SpriteKit
 
 class stickyT : SKSpriteNode{
     var image = SKSpriteNode(imageNamed: "StickyT")
+    var rotatable = true
     
     func setup(){
         addChild(image)
