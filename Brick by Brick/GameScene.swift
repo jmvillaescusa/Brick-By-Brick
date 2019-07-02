@@ -52,12 +52,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var movingLeft: Bool = false
     var movingRight: Bool = false
     
-    //Setup
+    ////////////////////////// Start of setup Elements //////////////////////////////////
+    //Camera
     func setupCamera() {
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = CGPoint(x: 0, y: 0)
+        //cameraNode.setScale(2)
     }
+    //Base
     func setupBase() {
         base.setup()
         base.zPosition = 1
@@ -66,6 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         base.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         addChild(base)
     }
+    //Kill Boxes
     func setupKillboxes(){
         killBox1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox1.size)
         killBox1.zPosition = 1
@@ -81,6 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         killBox2.physicsBody?.contactTestBitMask = CategoryMask.blocks.rawValue
         killBox2.physicsBody?.isDynamic = false
     }
+    //Buttons
     func setupButton() {
         rotateLeft.position = CGPoint(x: -400, y: -1100)
         rotateLeft.setScale(2)
@@ -97,6 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         holdPiece.zPosition = 100
         addChild(holdPiece)
     }
+    ////////////////////////////////////////////////////////////
     
     override func didMove(to view: SKView) {
         setupCamera()
@@ -133,7 +139,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (contact.bodyA.categoryBitMask == CategoryMask.killbox.rawValue){
                 contact.bodyB.node?.removeFromParent()
                 lives = lives - 1
-                print("delete A")
+                print("delete A, Lives: \(lives)")
+            }
+        }
+        // collision for stickyhitting kill box
+        else if (collision == CategoryMask.sticky.rawValue | CategoryMask.killbox.rawValue){
+            if (contact.bodyA.categoryBitMask == CategoryMask.killbox.rawValue){
+                contact.bodyB.node?.removeFromParent()
+                lives = lives - 1
+                print("delete A, Lives: \(lives)")
             }
         }
         // collision for sticky block hitting blocks
@@ -142,10 +156,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // create a fixed joint between bodyA and bodyB
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
                 
+                run(SKAction.wait(forDuration: 20))
+                
                 scene?.physicsWorld.add(collisionBox)
             }
             else if (contact.bodyB.categoryBitMask == CategoryMask.sticky.rawValue){
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
+                
+                run(SKAction.wait(forDuration: 20))
                 
                 scene?.physicsWorld.add(collisionBox)
             }
@@ -154,11 +172,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (collision == CategoryMask.sticky.rawValue | CategoryMask.sticky.rawValue){
             var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
             
+            run(SKAction.wait(forDuration: 20))
             scene?.physicsWorld.add(collisionBox)
             print("hitting sticky with sticky")
         }
         else {
         }
+        
     }
     
     
@@ -210,7 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateNextBlock()
         droppableBlocks[0].position = spawnLocation
         addChild(droppableBlocks[0])
-        print(droppableBlocks[0].physicsBody?.categoryBitMask)
+        //print(droppableBlocks[0].physicsBody?.categoryBitMask)
         droppableBlocks.remove(at: 0)
     }
     
@@ -220,6 +240,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.SpawnBlock()
         }
         let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 4)]))
+        
         
         run(repeatNewBlock)
     }
