@@ -21,7 +21,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var spawnLocation = CGPoint(x: 0, y: 0)
     
     var fallingBlock = SKSpriteNode()
-    var fallingSpeed: CGFloat = 5
     var tetrisBlocks = [SKSpriteNode]()
     var savedBlock = SKSpriteNode()
     var nextBlock = SKSpriteNode()
@@ -31,6 +30,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var droppableBlocks = [SKSpriteNode]()
     
+    var count: Int = 0
+    
     var killBox1 = SKSpriteNode()
     var killBox2 = SKSpriteNode()
     
@@ -39,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case killbox = 0b10 // 2
         case base = 0b11 // 3
         case sticky = 0b100 // 4
+        case tower = 0b101 // 5
     }
     
     
@@ -178,44 +180,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
         }
-        
+        //fallingBlock.physicsBody?.categoryBitMask = CategoryMask.tower.rawValue
+        //fallingBlock.physicsBody?.collisionBitMask = CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
     }
     
     
     // This creates a block for the array to spawn
     func createBlock(){
         spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
-        var randNum = Int.random(in: 0..<99)
+        var randNum = Int.random(in: 0...7)
         
-        if (randNum > 0 && randNum <= 9){
-            letterL()
-        }
-        if (randNum >= 10 && randNum <= 19){
-            letterI()
-        }
-        if (randNum >= 20 && randNum <= 29){
-            letterJ()
-        }
-        if (randNum >= 30 && randNum <= 39){
-            letterO()
-        }
-        if (randNum >= 40 && randNum <= 49){
-            letterS()
-        }
-        if (randNum >= 50 && randNum <= 59){
-            letterT()
-        }
-        if (randNum >= 60 && randNum <= 69){
-            letterZ()
-        }
-        if (randNum >= 70 && randNum <= 79){
-            StickyL()
-        }
-        if (randNum >= 80 && randNum <= 89){
-            StickyI()
-        }
-        if (randNum >= 90 && randNum <= 99){
-            StickyO()
+        switch randNum {
+        case 0: letterL()
+        case 1: letterI()
+        case 2: letterJ()
+        case 3: letterO()
+        case 4: letterS()
+        case 5: letterT()
+        case 6: letterZ()
+        case 7:
+            var stickyNum = Int.random(in: 0...6)
+            
+            if stickyNum == 0 { StickyL() }
+            if stickyNum == 1 { StickyI() }
+            if stickyNum == 2 { StickyJ() }
+            if stickyNum == 3 { StickyO() }
+            if stickyNum == 4 { StickyS() }
+            if stickyNum == 5 { StickyT() }
+            if stickyNum == 6 { StickyZ() }
+        default: break
         }
     }
     
@@ -243,6 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         run(repeatNewBlock)
+
     }
  
     //This fills the block array to 50 blocks
@@ -456,12 +450,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Next Piece
         showingNext.position.y = cameraNode.position.y + 1145
+        
+        //Kill Box
+        killBox1.position.y = cameraNode.position.y - 1372.306
+        killBox2.position.y = cameraNode.position.y - 1372.306
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         updateUI()
-        cameraNode.position.y += 0.5
+        cameraNode.position.y += 1
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -504,10 +502,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for _ in touches { fallingSpeed = 5 }
-        movingDown = false
-        movingLeft = false
-        movingRight = false
+        for _ in touches {
+            movingDown = false
+            movingLeft = false
+            movingRight = false
+        }
     }
 }
 
