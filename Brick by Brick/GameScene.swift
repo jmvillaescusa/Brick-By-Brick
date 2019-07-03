@@ -106,13 +106,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self
         
-        killBox1 = childNode(withName: "killbox1") as! SKSpriteNode
-        killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
-        
         setupKillboxes()
         setupBase()
+        setupKillBoxetc()
     
-        showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
+       
         if (droppableBlocks.count < 2){
             fillBlockArray()
         }
@@ -135,6 +133,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (contact.bodyA.categoryBitMask == CategoryMask.killbox.rawValue){
                 contact.bodyB.node?.removeFromParent()
                 lives = lives - 1
+                if (lives <= 0){
+                    hasDied()
+                }
             }
         }
         // collision for sticky block hitting blocks
@@ -143,6 +144,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 // create a fixed joint between bodyA and bodyB
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
                 rotatable = false
+                contact.bodyA.angularVelocity = 0
+                contact.bodyB.angularVelocity = 0
                 //contact.bodyA.allowsRotation = false
                 //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
@@ -150,6 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else if (contact.bodyB.categoryBitMask == CategoryMask.sticky.rawValue){
                 var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
                 rotatable = false
+                contact.bodyA.angularVelocity = 0
+                contact.bodyB.angularVelocity = 0
                 //contact.bodyA.allowsRotation = false
                 //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
@@ -159,6 +164,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if (collision == CategoryMask.sticky.rawValue | CategoryMask.sticky.rawValue){
             var collisionBox = SKPhysicsJointFixed.joint(withBodyA: contact.bodyA, bodyB: contact.bodyB, anchor: contact.contactPoint)
             rotatable = false
+            contact.bodyA.angularVelocity = 0
+            contact.bodyB.angularVelocity = 0
             //contact.bodyA.allowsRotation = false
             //contact.bodyB.allowsRotation = false
             scene?.physicsWorld.add(collisionBox)
@@ -166,6 +173,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
         }
+    }
+    
+    func setupKillBoxetc(){
+        //killBox1 = childNode(withName: "killbox1") as! SKSpriteNode
+        //killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
+        //showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
+        
+    }
+    
+    func hasDied(){
+        var transition:SKTransition = SKTransition.fade(withDuration: 1)
+        
+        let scene:SKScene = LoseScene(size: self.size)
+        scene.view?.presentScene(scene, transition: transition)
     }
     
     
@@ -448,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         updateUI()
-        cameraNode.position.y += 0.5
+        //cameraNode.position.y += 0.5
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
