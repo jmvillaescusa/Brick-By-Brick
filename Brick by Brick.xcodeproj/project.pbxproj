@@ -45,6 +45,11 @@
 		A822783B22C5833C0033E6BC /* StickyJ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822783A22C5833C0033E6BC /* StickyJ.swift */; };
 		A8809DAD22CC126B0013EBA2 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8809DAC22CC126B0013EBA2 /* MenuScene.sks */; };
 		A8809DAF22CC13890013EBA2 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8809DAE22CC13890013EBA2 /* MenuScene.swift */; };
+		A8CCEC7222CD5D7A00B2565A /* Menubutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CCEC6D22CD5D7A00B2565A /* Menubutton.png */; };
+		A8CCEC7322CD5D7A00B2565A /* LoseMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CCEC6E22CD5D7A00B2565A /* LoseMenu.png */; };
+		A8CCEC7422CD5D7A00B2565A /* Replaybutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CCEC6F22CD5D7A00B2565A /* Replaybutton.png */; };
+		A8CCEC7522CD5D7A00B2565A /* Playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CCEC7022CD5D7A00B2565A /* Playbutton.png */; };
+		A8CCEC7622CD5D7A00B2565A /* Startmenu.png in Resources */ = {isa = PBXBuildFile; fileRef = A8CCEC7122CD5D7A00B2565A /* Startmenu.png */; };
 		A8D694E822C2DA15007F595C /* LetterL.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E722C2DA15007F595C /* LetterL.swift */; };
 		A8D694EA22C2E7FA007F595C /* LetterZ.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694E922C2E7FA007F595C /* LetterZ.swift */; };
 		A8D694EC22C2E83A007F595C /* LetterO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D694EB22C2E83A007F595C /* LetterO.swift */; };
@@ -120,6 +125,11 @@
 		A822783A22C5833C0033E6BC /* StickyJ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyJ.swift; sourceTree = "<group>"; };
 		A8809DAC22CC126B0013EBA2 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		A8809DAE22CC13890013EBA2 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = Assets/MenuScene.swift; sourceTree = "<group>"; };
+		A8CCEC6D22CD5D7A00B2565A /* Menubutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Menubutton.png; path = ../../../../../../Desktop/Menus/Menubutton.png; sourceTree = "<group>"; };
+		A8CCEC6E22CD5D7A00B2565A /* LoseMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoseMenu.png; path = ../../../../../../Desktop/Menus/LoseMenu.png; sourceTree = "<group>"; };
+		A8CCEC6F22CD5D7A00B2565A /* Replaybutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Replaybutton.png; path = ../../../../../../Desktop/Menus/Replaybutton.png; sourceTree = "<group>"; };
+		A8CCEC7022CD5D7A00B2565A /* Playbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Playbutton.png; path = ../../../../../../Desktop/Menus/Playbutton.png; sourceTree = "<group>"; };
+		A8CCEC7122CD5D7A00B2565A /* Startmenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Startmenu.png; path = ../../../../../../Desktop/Menus/Startmenu.png; sourceTree = "<group>"; };
 		A8D694E722C2DA15007F595C /* LetterL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterL.swift; sourceTree = "<group>"; };
 		A8D694E922C2E7FA007F595C /* LetterZ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterZ.swift; sourceTree = "<group>"; };
 		A8D694EB22C2E83A007F595C /* LetterO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterO.swift; sourceTree = "<group>"; };
@@ -232,6 +242,7 @@
 		5585343822C2D80600DCF453 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				A8CCEC6C22CD5D4C00B2565A /* Menu */,
 				55765BA322C4266800CCC4E4 /* UIButtons */,
 				5585343922C2D80600DCF453 /* Sticky */,
 				5585344122C2D80600DCF453 /* Letter */,
@@ -281,6 +292,18 @@
 				5585344822C2D80600DCF453 /* LetterT.png */,
 			);
 			path = Letter;
+			sourceTree = "<group>";
+		};
+		A8CCEC6C22CD5D4C00B2565A /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				A8CCEC6E22CD5D7A00B2565A /* LoseMenu.png */,
+				A8CCEC6D22CD5D7A00B2565A /* Menubutton.png */,
+				A8CCEC7022CD5D7A00B2565A /* Playbutton.png */,
+				A8CCEC6F22CD5D7A00B2565A /* Replaybutton.png */,
+				A8CCEC7122CD5D7A00B2565A /* Startmenu.png */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,11 +411,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55765BA622C4266800CCC4E4 /* left.png in Resources */,
+				A8CCEC7522CD5D7A00B2565A /* Playbutton.png in Resources */,
 				5585345222C2D80600DCF453 /* LetterZ.png in Resources */,
 				55765BA922C427E500CCC4E4 /* hold.png in Resources */,
 				5585345622C2D80600DCF453 /* LetterS.png in Resources */,
 				5585345822C2D80600DCF453 /* Base.png in Resources */,
 				5585344A22C2D80600DCF453 /* StickyS.png in Resources */,
+				A8CCEC7222CD5D7A00B2565A /* Menubutton.png in Resources */,
+				A8CCEC7322CD5D7A00B2565A /* LoseMenu.png in Resources */,
 				5585341022C2D74700DCF453 /* Main.storyboard in Resources */,
 				5585340722C2D74700DCF453 /* GameScene.sks in Resources */,
 				A8809DAD22CC126B0013EBA2 /* MenuScene.sks in Resources */,
@@ -403,6 +429,7 @@
 				A8F5E2F122CC23B100283CDF /* LoseScene.sks in Resources */,
 				5585345422C2D80600DCF453 /* LetterJ.png in Resources */,
 				5585344F22C2D80600DCF453 /* StickyI.png in Resources */,
+				A8CCEC7422CD5D7A00B2565A /* Replaybutton.png in Resources */,
 				5585341222C2D74800DCF453 /* Assets.xcassets in Resources */,
 				5585344D22C2D80600DCF453 /* StickyL.png in Resources */,
 				5585345722C2D80600DCF453 /* LetterT.png in Resources */,
@@ -411,6 +438,7 @@
 				5585341522C2D74800DCF453 /* LaunchScreen.storyboard in Resources */,
 				5585345322C2D80600DCF453 /* LetterO.png in Resources */,
 				55765BA722C4266800CCC4E4 /* right.png in Resources */,
+				A8CCEC7622CD5D7A00B2565A /* Startmenu.png in Resources */,
 				5585345522C2D80600DCF453 /* LetterI.png in Resources */,
 				5585340922C2D74700DCF453 /* Actions.sks in Resources */,
 			);

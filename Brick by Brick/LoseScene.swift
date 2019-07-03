@@ -11,10 +11,26 @@ import SpriteKit
 
 class LoseScene: SKScene {
     var button = SKSpriteNode()
+    var background = SKSpriteNode()
+    
+    let screenSize : CGRect = UIScreen.main.bounds
     
     override func didMove(to view: SKView) {
         ////// present losing screen
-        button = childNode(withName: "returnbutton") as! SKSpriteNode
+        //button = childNode(withName: "returnbutton") as! SKSpriteNode
+        setupLose()
+        print(screenSize.height)
+    }
+    
+    func setupLose(){
+        background = SKSpriteNode(imageNamed: "LoseMenu")
+        background.position = CGPoint(x: 0, y: 0)
+        background.size.width = screenSize.width * 3.3
+        background.size.height = screenSize.height * 3.3
+        addChild(background)
+        button = SKSpriteNode(imageNamed: "Menubutton")
+        button.position = CGPoint(x: screenSize.width * 0.15 , y: screenSize.height - 1300)
+        addChild(button)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

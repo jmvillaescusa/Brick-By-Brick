@@ -12,10 +12,25 @@ import GameplayKit
 
 class MenuScene: SKScene {
     var startButton = SKSpriteNode()
+    var background = SKSpriteNode()
+    
+    let screenSize : CGRect = UIScreen.main.bounds
     
     override func didMove(to view: SKView) {
-        startButton = childNode(withName: "startbutton") as! SKSpriteNode
-        
+        //startButton = childNode(withName: "startbutton") as! SKSpriteNode
+        setupStart()
+        print(screenSize)
+    }
+    
+    func setupStart(){
+        background = SKSpriteNode(imageNamed: "Startmenu")
+        background.position = CGPoint(x: screenSize.width + 260, y: 1500)
+        background.size.width = screenSize.width * 3.3
+        background.size.height = screenSize.height * 3.3
+        addChild(background)
+        startButton = SKSpriteNode(imageNamed: "Playbutton")
+        startButton.position = CGPoint(x: screenSize.width * 1.6 , y: screenSize.height * 0.7)
+        addChild(startButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
