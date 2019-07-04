@@ -26,6 +26,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nextBlock = SKSpriteNode()
     var showingNext = SKSpriteNode()
     
+    var held: Bool = false
+    var pieceOnHold: Bool = false
+    
     var lives = 5
     
     var droppableBlocks = [SKSpriteNode]()
@@ -40,14 +43,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case killbox = 0b10 // 2
         case base = 0b11 // 3
         case sticky = 0b100 // 4
-        case tower = 0b101 // 5
     }
-    
     
     //UI Buttons
     let rotateLeft = SKSpriteNode(imageNamed: "left")
     let rotateRight = SKSpriteNode(imageNamed: "right")
-    let holdPiece = SKSpriteNode(imageNamed: "hold") //Doesn't do anything yet
+    let holdPiece = SKSpriteNode(imageNamed: "hold")
     
     //Movement
     var movingDown: Bool = false
@@ -119,6 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupBase()
     
         showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
+        savedBlock = childNode(withName: "SavedBlock") as! SKSpriteNode
         if (droppableBlocks.count < 2){
             fillBlockArray()
         }
@@ -180,8 +182,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else {
         }
-        //fallingBlock.physicsBody?.categoryBitMask = CategoryMask.tower.rawValue
-        //fallingBlock.physicsBody?.collisionBitMask = CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
     }
     
     
@@ -221,10 +221,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func SpawnBlock(){
         fallingBlock = droppableBlocks[0]
         updateNextBlock()
-        droppableBlocks[0].position = spawnLocation
-        addChild(droppableBlocks[0])
-        //print(droppableBlocks[0].physicsBody?.categoryBitMask)
+        fallingBlock.position = spawnLocation
+        addChild(fallingBlock)
         droppableBlocks.remove(at: 0)
+        
+        
+        
+        held = false
+        
+        //Update camera
+        count += 1
+        if count > 2 {
+            updateCamera()
+            count = 0
+        }
     }
     
     //This is a endless loop that spawns the blocks
@@ -233,10 +243,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.SpawnBlock()
         }
         let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 4)]))
-        
-        
-        run(repeatNewBlock)
 
+        run(repeatNewBlock)
     }
  
     //This fills the block array to 50 blocks
@@ -439,6 +447,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    ////
+    ////
+    ////
+    ////
+    func hold() {
+        if (!held) {
+            held = true
+            if (pieceOnHold) {
+                print("piece swaped")
+            } else {
+                pieceOnHold = true
+                print("piece held")
+            }
+        }
+    }
+    ////
+    ////
+    ////
+    ////
+    
     func updateUI() {
         //UI Buttons
         rotateLeft.position.y = cameraNode.position.y - 1100
@@ -448,18 +476,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Spawn Location
         spawnLocation.y = cameraNode.position.y + 1700
         
-        //Next Piece
+        //Next & Saved Piece
         showingNext.position.y = cameraNode.position.y + 1145
+        savedBlock.position.y = cameraNode.position.y + 1145
         
         //Kill Box
         killBox1.position.y = cameraNode.position.y - 1372.306
         killBox2.position.y = cameraNode.position.y - 1372.306
     }
+    func updateCamera() {
+        cameraNode.position.y = cameraNode.position.y + 180
+    }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         updateUI()
-        cameraNode.position.y += 1
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -471,7 +502,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             } else if (rotateRight.frame.contains(location)) {
                 turnRight()
             } else if (holdPiece.frame.contains(location)) {
-                print("piece held")
+                hold()
+                
             }
         }
     }
@@ -480,9 +512,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for touch in touches {
             let newlocation = touch.location(in: self)
             let previousLocation = touch.previousLocation(in: self)
-            
-            
-            
             if (!rotateLeft.frame.contains(newlocation) && !rotateRight.frame.contains(newlocation) && !holdPiece.frame.contains(newlocation)) {
                 if (newlocation.y < previousLocation.y - 20) {
                     movingDown = true
