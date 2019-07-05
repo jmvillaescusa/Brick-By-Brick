@@ -27,9 +27,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nextBlock = SKSpriteNode()
     var showingNext = SKSpriteNode()
     
+    var highestBlock = SKSpriteNode()
+    
     var lives = 5
     
     var droppableBlocks = [SKSpriteNode]()
+    var spawnedBlocks = [SKSpriteNode]()
     
     var killBox1 = SKSpriteNode()
     var killBox2 = SKSpriteNode()
@@ -60,6 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         camera = cameraNode
         cameraNode.position = CGPoint(x: 0, y: 0)
     }
+    
     func setupBase() {
         base.setup()
         base.zPosition = 1
@@ -68,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         base.physicsBody?.collisionBitMask = CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         addChild(base)
     }
+    
     func setupKillboxes(){
         killBox1.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: killBox1.size)
         killBox1.zPosition = 1
@@ -109,8 +114,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupKillboxes()
         setupBase()
         setupKillBoxetc()
-    
-       
+        highestBlockSetup()
+        
         if (droppableBlocks.count < 2){
             fillBlockArray()
         }
@@ -146,8 +151,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 rotatable = false
                 contact.bodyA.angularVelocity = 0
                 contact.bodyB.angularVelocity = 0
-                //contact.bodyA.allowsRotation = false
-                //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
             }
             else if (contact.bodyB.categoryBitMask == CategoryMask.sticky.rawValue){
@@ -155,8 +158,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 rotatable = false
                 contact.bodyA.angularVelocity = 0
                 contact.bodyB.angularVelocity = 0
-                //contact.bodyA.allowsRotation = false
-                //contact.bodyB.allowsRotation = false
                 scene?.physicsWorld.add(collisionBox)
             }
         }
@@ -166,8 +167,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             rotatable = false
             contact.bodyA.angularVelocity = 0
             contact.bodyB.angularVelocity = 0
-            //contact.bodyA.allowsRotation = false
-            //contact.bodyB.allowsRotation = false
             scene?.physicsWorld.add(collisionBox)
             print("hitting sticky with sticky")
         }
@@ -180,6 +179,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
         //showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
         
+    }
+    
+    func highestBlockSetup(){
+        highestBlock = SKSpriteNode(imageNamed: "LetterI")
+        highestBlock.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterI"), size: highestBlock.size)
     }
     
     func hasDied(){
@@ -207,22 +211,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (randNum >= 30 && randNum <= 39){
             letterO()
         }
-        if (randNum >= 40 && randNum <= 49){
+        if (randNum >= 40 && randNum <= 52){
             letterS()
         }
-        if (randNum >= 50 && randNum <= 59){
+        if (randNum >= 53 && randNum <= 69){
             letterT()
         }
-        if (randNum >= 60 && randNum <= 69){
+        if (randNum >= 70 && randNum <= 86){
             letterZ()
         }
-        if (randNum >= 70 && randNum <= 79){
+        if (randNum >= 86 && randNum <= 89){
             StickyL()
         }
-        if (randNum >= 80 && randNum <= 89){
+        if (randNum >= 90 && randNum <= 95){
             StickyI()
         }
-        if (randNum >= 90 && randNum <= 99){
+        if (randNum >= 96 && randNum <= 99){
             StickyO()
         }
     }
@@ -238,10 +242,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateNextBlock()
         droppableBlocks[0].position = spawnLocation
         addChild(droppableBlocks[0])
-        print(droppableBlocks[0].physicsBody?.categoryBitMask)
+        spawnedBlocks.append(fallingBlock)
         droppableBlocks.remove(at: 0)
         rotatable = true
     }
+    
     
     //This is a endless loop that spawns the blocks
     func dropBlock(){

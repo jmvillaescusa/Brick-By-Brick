@@ -17,19 +17,20 @@ class MenuScene: SKScene {
     let screenSize : CGRect = UIScreen.main.bounds
     
     override func didMove(to view: SKView) {
-        //startButton = childNode(withName: "startbutton") as! SKSpriteNode
         setupStart()
         print(screenSize)
     }
     
     func setupStart(){
         background = SKSpriteNode(imageNamed: "Startmenu")
-        background.position = CGPoint(x: screenSize.width + 260, y: 1500)
+        background.position = CGPoint(x: screenSize.width - 420, y: 0)
         background.size.width = screenSize.width * 3.3
         background.size.height = screenSize.height * 3.3
+        background.zPosition = 0
         addChild(background)
         startButton = SKSpriteNode(imageNamed: "Playbutton")
-        startButton.position = CGPoint(x: screenSize.width * 1.6 , y: screenSize.height * 0.7)
+        startButton.position = CGPoint(x: screenSize.width - 420 , y: -700)
+        startButton.zPosition = 100
         addChild(startButton)
     }
     
