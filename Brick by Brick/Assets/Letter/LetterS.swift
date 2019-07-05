@@ -15,6 +15,7 @@ class S : SKSpriteNode{
     func setup(){
         addChild(image)
         let physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "LetterS"), size: image.size)
+        physicsBody.mass = 100
         physicsBody.affectedByGravity = true
         physicsBody.restitution = 0
         self.physicsBody = physicsBody
