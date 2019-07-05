@@ -24,6 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var tetrisBlocks = [SKSpriteNode]()
     var savedBlock = SKSpriteNode()
     var nextBlock = SKSpriteNode()
+    var tempBlock = SKSpriteNode()
+    
     var showingNext = SKSpriteNode()
     
     var held: Bool = false
@@ -189,6 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBlock(){
         spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
         var randNum = Int.random(in: 0...7)
+        //let randNum: Int = 7
         
         switch randNum {
         case 0: letterL()
@@ -200,6 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 6: letterZ()
         case 7:
             var stickyNum = Int.random(in: 0...6)
+            //let stickyNum: Int = 1
             
             if stickyNum == 0 { StickyL() }
             if stickyNum == 1 { StickyI() }
@@ -225,8 +229,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(fallingBlock)
         droppableBlocks.remove(at: 0)
         
-        
-        
         held = false
         
         //Update camera
@@ -244,6 +246,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 4)]))
 
+        run(repeatNewBlock)
+    }
+    
+    func swapBlock(){
+        
+        fallingBlock.texture = tempBlock.texture
+        
+        fallingBlock.position = spawnLocation
+        addChild(fallingBlock)
+        
+        let SpawnBlock = SKAction.run{
+            self.SpawnBlock()
+        }
+        let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 4), SpawnBlock]))
+        
         run(repeatNewBlock)
     }
  
@@ -447,25 +464,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    ////
-    ////
-    ////
-    ////
     func hold() {
         if (!held) {
             held = true
             if (pieceOnHold) {
                 print("piece swaped")
+                
+                tempBlock = savedBlock
+                savedBlock = fallingBlock
+                fallingBlock.removeFromParent()
+                fallingBlock = tempBlock
+                
+                self.removeAllActions()
+                swapBlock()
+                print("\(savedBlock)")
+                
             } else {
                 pieceOnHold = true
                 print("piece held")
+                
+                savedBlock = fallingBlock
+                fallingBlock.removeFromParent()
+                
+                self.removeAllActions()
+                dropBlock()
+                print("\(savedBlock)")
             }
         }
     }
-    ////
-    ////
-    ////
-    ////
     
     func updateUI() {
         //UI Buttons
@@ -503,7 +529,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 turnRight()
             } else if (holdPiece.frame.contains(location)) {
                 hold()
-                
             }
         }
     }
