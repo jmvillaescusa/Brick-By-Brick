@@ -22,12 +22,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var fallingBlock = SKSpriteNode()
     var tetrisBlocks = [SKSpriteNode]()
-    var savedBlock = SKSpriteNode()
+    //var savedBlock = SKSpriteNode()
     var heldBlock = SKSpriteNode()
     var nextBlock = SKSpriteNode()
     var tempBlock = SKSpriteNode()
     
-    var showingNext = SKSpriteNode()
+    //var showingNext = SKSpriteNode()
     
     var held: Bool = false
     var pieceOnHold: Bool = false
@@ -117,13 +117,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCamera()
         setupButton()
         
-        physicsWorld.contactDelegate = self
+        //physicsWorld.contactDelegate = self
         
         setupKillboxes()
         setupBase()
     
-        showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
-        savedBlock = childNode(withName: "SavedBlock") as! SKSpriteNode
+        //showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
+        //savedBlock = childNode(withName: "SavedBlock") as! SKSpriteNode
         
         if (droppableBlocks.count < 2){
             fillBlockArray()
@@ -219,7 +219,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // This creates a block for the array to spawn
     func createBlock(){
         spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
-        var randNum = Int.random(in: 0...6)
+        var randNum = Int.random(in: 0...94)
         //let randNum: Int = 7
         
         if (randNum > 0 && randNum <= 9){
@@ -250,14 +250,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updateNextBlock(){
-        showingNext.texture = droppableBlocks[1].texture
+        //showingNext.texture = droppableBlocks[1].texture
     }
     
     //This spawns a block from the first element of the array
     //Also, sets falling block to the dropped block, the next block to next block
     func SpawnBlock(){
         fallingBlock = droppableBlocks[0]
-        updateNextBlock()
+        //updateNextBlock()
 
         droppableBlocks[0].position = spawnLocation
         addChild(droppableBlocks[0])
@@ -266,7 +266,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rotatable = true
         
         fallingBlock.position = spawnLocation
-        addChild(fallingBlock)
+        //addChild(fallingBlock)
         droppableBlocks.remove(at: 0)
         
         held = false
@@ -470,8 +470,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnLocation.y = cameraNode.position.y + 1700
         
         //Next & Saved Piece
-        showingNext.position.y = cameraNode.position.y + 1145
-        savedBlock.position.y = cameraNode.position.y + 1145
+        //showingNext.position.y = cameraNode.position.y + 1145
+        //savedBlock.position.y = cameraNode.position.y + 1145
         
         //Kill Box
         killBox1.position.y = cameraNode.position.y - 1372.306
@@ -531,8 +531,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             movingRight = false
         }
     }
+}
 
 extension CGFloat {
     var degreesToRadians: CGFloat { return CGFloat(self) * .pi / 180 }
     }
-}
