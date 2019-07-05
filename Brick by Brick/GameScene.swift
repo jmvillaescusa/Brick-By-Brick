@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var fallingBlock = SKSpriteNode()
     var tetrisBlocks = [SKSpriteNode]()
     var savedBlock = SKSpriteNode()
+    var heldBlock = SKSpriteNode()
     var nextBlock = SKSpriteNode()
     var tempBlock = SKSpriteNode()
     
@@ -123,6 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
         showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
         savedBlock = childNode(withName: "SavedBlock") as! SKSpriteNode
+        
         if (droppableBlocks.count < 2){
             fillBlockArray()
         }
@@ -190,7 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // This creates a block for the array to spawn
     func createBlock(){
         spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
-        var randNum = Int.random(in: 0...7)
+        var randNum = Int.random(in: 0...6)
         //let randNum: Int = 7
         
         switch randNum {
@@ -201,17 +203,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 4: letterS()
         case 5: letterT()
         case 6: letterZ()
-        case 7:
-            var stickyNum = Int.random(in: 0...6)
-            //let stickyNum: Int = 1
-            
-            if stickyNum == 0 { StickyL() }
-            if stickyNum == 1 { StickyI() }
-            if stickyNum == 2 { StickyJ() }
-            if stickyNum == 3 { StickyO() }
-            if stickyNum == 4 { StickyS() }
-            if stickyNum == 5 { StickyT() }
-            if stickyNum == 6 { StickyZ() }
         default: break
         }
     }
@@ -233,7 +224,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Update camera
         count += 1
-        if count > 2 {
+        if count > 3 {
             updateCamera()
             count = 0
         }
@@ -245,14 +236,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.SpawnBlock()
         }
         let repeatNewBlock = SKAction.repeatForever(SKAction.sequence([SpawnBlock, SKAction.wait(forDuration: 4)]))
-
+        
         run(repeatNewBlock)
     }
     
     func swapBlock(){
-        
-        fallingBlock.texture = tempBlock.texture
-        
         fallingBlock.position = spawnLocation
         addChild(fallingBlock)
         
@@ -380,7 +368,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_s.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_s.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_s)
-
     }
     
     func StickyT(){
@@ -392,7 +379,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_t.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_t.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_t)
-
     }
     
     func StickyO(){
@@ -404,7 +390,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_o.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_o.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_o)
-
     }
     
     func StickyZ(){
@@ -416,7 +401,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_z.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_z.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_z)
-
     }
     
     func StickyI(){
@@ -428,7 +412,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_i.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_i.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_i)
-
     }
     
     func StickyJ(){
@@ -440,7 +423,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sticky_j.physicsBody?.collisionBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         sticky_j.physicsBody?.contactTestBitMask = CategoryMask.killbox.rawValue | CategoryMask.base.rawValue | CategoryMask.blocks.rawValue | CategoryMask.sticky.rawValue
         droppableBlocks.append(sticky_j)
-
     }
     
     ///////////////////////////////////End of Setups Letters//////////////////////
@@ -470,25 +452,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (pieceOnHold) {
                 print("piece swaped")
                 
-                tempBlock = savedBlock
-                savedBlock = fallingBlock
+                tempBlock = heldBlock
+                heldBlock = fallingBlock
                 fallingBlock.removeFromParent()
                 fallingBlock = tempBlock
                 
+                
                 self.removeAllActions()
                 swapBlock()
-                print("\(savedBlock)")
+                print("\(String())")
                 
             } else {
                 pieceOnHold = true
                 print("piece held")
                 
-                savedBlock = fallingBlock
+                heldBlock = fallingBlock
                 fallingBlock.removeFromParent()
                 
                 self.removeAllActions()
                 dropBlock()
-                print("\(savedBlock)")
+                print("\(String(describing: heldBlock.texture))")
             }
         }
     }
@@ -512,6 +495,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func updateCamera() {
         cameraNode.position.y = cameraNode.position.y + 180
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
