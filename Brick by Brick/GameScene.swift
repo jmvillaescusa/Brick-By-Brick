@@ -117,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupCamera()
         setupButton()
         
-        //physicsWorld.contactDelegate = self
+        physicsWorld.contactDelegate = self
         
         setupKillboxes()
         setupBase()
@@ -201,13 +201,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func setupKillBoxetc(){
-        //killBox1 = childNode(withName: "killbox1") as! SKSpriteNode
-        //killBox2 = childNode(withName: "killbox2") as! SKSpriteNode
-        //showingNext = childNode(withName: "NextShowingBlock") as! SKSpriteNode
-        
-    }
-    
     func hasDied(){
         var transition:SKTransition = SKTransition.fade(withDuration: 1)
         
@@ -220,7 +213,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBlock(){
         spawnLocation = CGPoint(x: screenSize.width/2 - 208, y: 0)
         var randNum = Int.random(in: 0...94)
-        //let randNum: Int = 7
         
         if (randNum > 0 && randNum <= 9){
             letterL()
