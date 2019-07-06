@@ -422,6 +422,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    
     func hold() {
         if (!held) {
             held = true
@@ -436,9 +437,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 self.removeAllActions()
                 swapBlock()
-                print("\(String())")
+                print("\(String(describing: heldBlock.texture))")
                 
             } else {
+                //This chunk of code should be called once
                 pieceOnHold = true
                 print("piece held")
                 
